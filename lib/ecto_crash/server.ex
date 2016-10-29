@@ -41,24 +41,21 @@ defmodule EctoCrash.Server do
     end
 
     ################################################################
-    ### PRIVATE
-    ################################################################
 
-
-  def after_create(user) do
-    IO.puts "Work, work, work, work, work! id: #{user.id}"
-    for u <- similar(user) do
-      for x <- similar(u) do
-        IO.puts "Found similar user = #{inspect x.id}"
-      end
+    def after_create(user) do
+        IO.puts "Work, work, work, work, work! id: #{user.id}"
+        for u <- similar(user) do
+            for x <- similar(u) do
+                IO.puts "Found similar user = #{inspect x.id}"
+            end
+        end
     end
-  end
 
-  def similar(user) do
-    query = from u in User,
-    where: u.id != ^user.id,
-    select: u, distinct: u.id
-    Repo.all(query)
-  end
+    def similar(user) do
+        query = from u in User,
+        where: u.id != ^user.id,
+        select: u, distinct: u.id
+        Repo.all(query)
+    end
 
 end
